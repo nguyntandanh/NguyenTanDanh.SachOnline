@@ -1,0 +1,29 @@
+﻿@model NguyenTanDanh.SachOnline.Models.NHAXUATBAN
+@{
+    ViewBag.Title = "Chỉnh sửa NXB";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chỉnh sửa Nhà xuất bản</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.MaNXB)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TenNXB)
+        @Html.TextBoxFor(m => m.TenNXB, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DiaChi)
+        @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DienThoai)
+        @Html.TextBoxFor(m => m.DienThoai, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-default" })
+}

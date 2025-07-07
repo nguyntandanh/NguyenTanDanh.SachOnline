@@ -1,0 +1,146 @@
+﻿@model NguyenTanDanh.SachOnline.Models.SACH
+@{
+    ViewBag.Title = "Chỉnh sửa sách";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="text-center">✏️ CHỈNH SỬA SÁCH</h2>
+<hr />
+
+@using (Html.BeginForm("Edit", "Sach", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.MaSach)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        <!-- Tên sách -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.TenSach, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.TenSach, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TenSach)
+            </div>
+        </div>
+
+        <!-- Tác giả -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.TacGia, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.TacGia, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TacGia)
+            </div>
+        </div>
+
+        <!-- Mô tả -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.MoTa, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = 4 })
+                @Html.ValidationMessageFor(m => m.MoTa)
+            </div>
+        </div>
+
+        <!-- Ảnh bìa hiện tại -->
+        <div class="form-group">
+            @Html.Label("Ảnh bìa hiện tại:", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @if (!string.IsNullOrEmpty(Model.AnhBia))
+                {
+                    <img src="~/Images/@Model.AnhBia" alt="Ảnh bìa" class="img-thumbnail" style="height:120px;" />
+                }
+                else
+                {
+                    <span class="text-muted">Chưa có ảnh bìa</span>
+                }
+            </div>
+        </div>
+
+        <!-- Upload ảnh bìa -->
+        <div class="form-group">
+            @Html.Label("Thay ảnh bìa:", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                <input type="file" name="fileUpload" class="form-control-file" />
+            </div>
+        </div>
+
+        <!-- Ảnh phụ -->
+        <div class="form-group">
+            @Html.Label("Thêm ảnh phụ:", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                <input type="file" name="anhPhu[]" multiple class="form-control-file" />
+                <small class="text-muted">Bạn có thể chọn nhiều ảnh</small>
+            </div>
+        </div>
+
+        <!-- Danh sách ảnh phụ hiện có -->
+        @if (Model.HINHANHSACHes != null && Model.HINHANHSACHes.Any())
+        {
+            <div class="form-group">
+                @Html.Label("Ảnh phụ hiện có:", new { @class = "control-label col-md-2" })
+                <div class="col-md-6 d-flex flex-wrap">
+                    @foreach (var img in Model.HINHANHSACHes)
+                    {
+                        <img src="~/Images/@img.DuongDan" class="img-thumbnail m-1" style="height: 80px;" />
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Ngày cập nhật -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.NgayCapNhat, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.NgayCapNhat, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(m => m.NgayCapNhat)
+            </div>
+        </div>
+
+        <!-- Số lượng -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.SoLuongBan, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.SoLuongBan, new { @class = "form-control", type = "number", min = 0 })
+                @Html.ValidationMessageFor(m => m.SoLuongBan)
+            </div>
+        </div>
+
+        <!-- Chủ đề -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.MaCD, "Chủ đề", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.MaCD, ViewBag.MaCD as SelectList, "--- Chọn chủ đề ---", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <!-- NXB -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.MaNXB, "Nhà xuất bản", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.MaNXB, ViewBag.MaNXB as SelectList, "--- Chọn NXB ---", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <!-- Khuyến mãi -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.MaKM, "Khuyến mãi", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.MaKM, ViewBag.MaKM as SelectList, "Không áp dụng", new { @class = "form-control" })
+                @if (ViewBag.GiaTriGiam != null)
+                {
+                    <p class="text-success mt-2">Đang áp dụng: <strong>@ViewBag.GiaTriGiam%</strong></p>
+                }
+            </div>
+        </div>
+
+        <!-- Nút lưu -->
+        <div class="form-group mt-3">
+            <div class="col-md-offset-2 col-md-6">
+                <button type="submit" class="btn btn-success">
+                    💾 Lưu thay đổi
+                </button>
+                @Html.ActionLink("❮ Quay lại", "Index", null, new { @class = "btn btn-secondary ml-2" })
+            </div>
+        </div>
+    </div>
+}

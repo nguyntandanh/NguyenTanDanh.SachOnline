@@ -1,0 +1,41 @@
+﻿@model NguyenTanDanh.SachOnline.Models.KHUYENMAI
+@{
+    ViewBag.Title = "Xóa khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="text-danger">⚠ Xác nhận xóa khuyến mãi</h2>
+<hr />
+<h4>Tên: <strong>@Model.TenKM</strong></h4>
+<p>@Model.MoTa</p>
+
+@if (Model.SACHes != null && Model.SACHes.Any())
+{
+    <div class="alert alert-warning">
+        <strong>Lưu ý:</strong> Khuyến mãi này đang được áp dụng cho <strong>@Model.SACHes.Count()</strong> sách.
+    </div>
+
+    <p>Bạn có muốn gỡ khuyến mãi khỏi tất cả sách và tiếp tục xóa không?</p>
+
+    using (Html.BeginForm("ForceDelete", "KhuyenMai", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.MaKM)
+
+        <button type="submit" class="btn btn-danger">🗑 Tiếp tục xóa</button>
+        <a href="@Url.Action("Index")" class="btn btn-default">Hủy</a>
+    }
+}
+else
+{
+    <div class="alert alert-danger">Bạn có chắc chắn muốn xóa khuyến mãi này?</div>
+
+    using (Html.BeginForm("ConfirmDelete", "KhuyenMai", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.MaKM)
+
+        <button type="submit" class="btn btn-danger">🗑 Xác nhận xóa</button>
+        <a href="@Url.Action("Index")" class="btn btn-default">Hủy</a>
+    }
+}

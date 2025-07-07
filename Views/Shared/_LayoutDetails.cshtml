@@ -1,0 +1,148 @@
+﻿@using NguyenTanDanh.SachOnline.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title- SáchOnline</title>
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("SáchOnline", "Index", "SachOnline", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <!-- MENU TRÁI -->
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Trang chủ", "Index", "SachOnline")</li>
+                    <li>@Html.ActionLink("Giới thiệu", "#", "#")</li>
+                    <li>@Html.ActionLink("Liên hệ", "#", "#")</li>
+
+                    <!--Chủ đề-->
+                    @{
+                        var chudeList = (List<CHUDE>)HttpContext.Current.Application["ChuDe"];
+                    }
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Chủ đề <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            @foreach (var cd in chudeList)
+                            {
+                                <li>
+                                    <a href="@Url.Action("SachTheoChuDe", "SachOnline", new { id = cd.MaCD })">@cd.TenChuDe</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
+                    <!--Nhà xuất bản-->
+                    @{
+                        var nxbList = (List<NHAXUATBAN>)HttpContext.Current.Application["NhaXuatBan"];
+                    }
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nhà xuất bản <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            @foreach (var nxb in nxbList)
+                            {
+                                <li>
+                                    <a href="@Url.Action("SachTheoNXB", "SachOnline", new { id = nxb.MaNXB })">@nxb.TenNXB</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- MENU PHẢI (Giỏ hàng + tìm kiếm) -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form class="navbar-form" role="search" method="get" action="@Url.Action("TimKiem", "SachOnline")">
+                            <div class="form-group">
+                                <input type="text" name="q" class="form-control" placeholder="Tìm kiếm..." />
+                            </div>
+                            <button type="submit" class="btn btn-default">Tìm</button>
+                        </form>
+                    </li>
+                    <!--Giỏ hàng-->
+                    <li>
+                        @Html.Action("GioHangPartial", "SachOnline")
+                    </li>
+
+                    <!--Tài khoản-->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài khoản <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            @if (Session["TaiKhoan"] == null)
+                            {
+                                <li>@Html.ActionLink("Đăng nhập", "DangNhap", "SachOnline")</li>
+                                <li>@Html.ActionLink("Đăng ký", "DangKy", "SachOnline")</li>
+                            }
+                            else
+                            {
+                                <li class="disabled">
+                                    <a href="#">Xin chào, <strong>@(((KHACHHANG)Session["TaiKhoan"]).HoTen)</strong></a>
+                                </li>
+                                <li>@Html.ActionLink("Đăng xuất", "DangXuat", "SachOnline")</li>
+
+                                if (((KHACHHANG)Session["TaiKhoan"]).LoaiTaiKhoan == "admin")
+                                {
+                                    <li>@Html.ActionLink("Trang quản trị", "Index", "Home", new { area = "Admin" }, null)</li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container body-content" style="margin-top: 30px;">
+
+        <!-- SLIDER: full width -->
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Action("SliderPartial", "SachOnline")
+            </div>
+        </div>
+
+        <!-- CÁC PHẦN DƯỚI SLIDER -->
+        <div class="row" style="margin-top: 20px;">
+            <!-- Nội dung chính -->
+            <div class="col-md-12">
+                @RenderBody()
+                @RenderSection("SachBanNhieu", required: false)
+
+            </div>
+        </div>
+
+        <hr />
+        @Html.Action("FooterPartial", "SachOnline")
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
+<script>
+    function changeMainImage(src) {
+        document.getElementById('mainImage').src = src;
+    }
+</script>

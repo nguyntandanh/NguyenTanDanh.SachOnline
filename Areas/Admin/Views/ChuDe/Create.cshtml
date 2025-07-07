@@ -1,0 +1,20 @@
+﻿@model NguyenTanDanh.SachOnline.Models.CHUDE
+@{
+    ViewBag.Title = "Thêm chủ đề";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thêm Chủ đề mới</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TenChuDe)
+        @Html.TextBoxFor(m => m.TenChuDe, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Thêm</button>
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-default" })
+}

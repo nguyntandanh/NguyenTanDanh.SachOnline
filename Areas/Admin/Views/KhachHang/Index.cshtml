@@ -1,0 +1,35 @@
+﻿@model IEnumerable<NguyenTanDanh.SachOnline.Models.KHACHHANG>
+
+@{
+    ViewBag.Title = "Danh sách khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="text-center">DANH SÁCH KHÁCH HÀNG</h2>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Họ tên</th>
+        <th>Địa chỉ</th>
+        <th>Điện thoại</th>
+        <th>Email</th>
+        <th>Tài khoản</th>
+        <th>Loại tài khoản</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.HoTen</td>
+            <td>@item.DiaChi</td>
+            <td>@item.DienThoai</td>
+            <td>@item.Email</td>
+            <td>@item.TaiKhoan</td>
+            <td>@item.LoaiTaiKhoan</td>
+            <td>
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.MaKH }, new { @class = "btn btn-info btn-sm" }) 
+                @Html.ActionLink("Sửa", "Edit", new { id = item.MaKH }, new { @class = "btn btn-warning btn-sm" }) 
+                @Html.ActionLink("Xoá", "Delete", new { id = item.MaKH }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+</table>

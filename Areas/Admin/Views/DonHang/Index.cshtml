@@ -1,0 +1,33 @@
+﻿@model IEnumerable<NguyenTanDanh.SachOnline.Models.DONDATHANG>
+@{
+    ViewBag.Title = "Danh sách đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2 class="text-center">DANH SÁCH ĐƠN HÀNG</h2>
+<table class="table table-bordered text-center">
+    <tr class="info">
+        <th>Mã</th>
+        <th>Khách hàng</th>
+        <th>Ngày đặt</th>
+        <th>Ngày giao</th>
+        <th>Đã giao</th>
+        <th>Thanh toán</th>
+        <th>Thao tác</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.MaDonHang</td>
+            <td>@item.KHACHHANG.HoTen</td>
+            <td>@item.NgayDat.ToShortDateString()</td>
+            <td>@item.NgayGiao.ToString("dd/MM/yyyy")</td>
+            <td>@(item.TinhTrangGiaoHang.HasValue ? (item.TinhTrangGiaoHang.Value ? "✓" : "✗") : "?")</td>
+            <td>@(item.DaThanhToan.HasValue ? (item.DaThanhToan.Value ? "✓" : "✗") : "?")</td>
+
+            <td>
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.MaDonHang }, new { @class = "btn btn-info btn-sm" }) 
+                @Html.ActionLink("Xoá", "Delete", new { id = item.MaDonHang }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+</table>

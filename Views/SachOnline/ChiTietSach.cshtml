@@ -1,0 +1,105 @@
+﻿@model NguyenTanDanh.SachOnline.Models.SACH
+@using System
+
+@{
+    ViewBag.Title = Model.TenSach;
+    Layout = "~/Views/Shared/_LayoutDetails.cshtml";
+
+    var giaGoc = Model.GIATIENs.FirstOrDefault()?.Gia ?? 0;
+    var km = Model.KHUYENMAI;
+    var giam = (km != null && km.TrangThai && DateTime.Now >= km.NgayBatDau && DateTime.Now <= km.NgayKetThuc)
+        ? km.GiaTriPhanTram ?? 0 : 0;
+    var giaKM = giaGoc * (1 - (decimal)giam / 100);
+}
+
+<div class="row">
+    <!-- Cột ảnh 2/5 -->
+    <div class="col-md-5">
+        <img id="mainImage" src="~/Images/@Model.AnhBia" class="img-responsive img-thumbnail" />
+
+        <div class="row mt-2">
+            @if (Model.HINHANHSACHes != null && Model.HINHANHSACHes.Any())
+            {
+                foreach (var hinh in Model.HINHANHSACHes.Take(4))
+                {
+                    <div class="col-xs-3">
+                        <img src="~/Images/@hinh.DuongDan" class="img-thumbnail" style="cursor:pointer;" onclick="changeMainImage(this.src)" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- Cột nội dung 3/5 -->
+    <div class="col-md-7">
+        <h2>@Model.TenSach</h2>
+        <p><strong>Nhà xuất bản:</strong> @(Model.NHAXUATBAN?.TenNXB)</p>
+        <p><strong>Tác giả:</strong> @Model.TacGia</p>
+
+        <div class="mb-3">
+            @if (giam > 0)
+            {
+                <h3 style="color:red;">
+                    @giaKM.ToString("n0") đ
+                    <span style="text-decoration:line-through; font-size:16px; color:#888; margin-left:10px;">
+                        @giaGoc.ToString("n0") đ
+                    </span>
+                    <span class="badge bg-danger">-@giam%</span>
+                </h3>
+            }
+            else
+            {
+                <h3 style="color:red;">@giaGoc.ToString("n0") đ</h3>
+            }
+        </div>
+
+        <div class="form-group mt-3">
+            <a href="@Url.Action("ThemGioHang", "SachOnline", new { id = Model.MaSach, returnUrl = Request.RawUrl })" class="btn btn-danger">
+                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+            </a>
+        </div>
+
+        <hr />
+        <h4>Thông tin vận chuyển</h4>
+        <div class="form-group">
+            <label>Địa chỉ nhận hàng:</label>
+            <input type="text" class="form-control" placeholder="Nhập địa chỉ..." />
+        </div>
+
+        <div class="form-group">
+            <label>Số lượng:</label>
+            <div class="quantity-selector">
+                <button type="button" onclick="decreaseQty()">-</button>
+                <input type="text" id="quantity" name="soLuong" value="1" readonly />
+                <button type="button" onclick="increaseQty()">+</button>
+            </div>
+        </div>
+
+        <hr />
+        <h4>Mô tả sản phẩm</h4>
+        <p>@Html.Raw(Model.MoTa)</p>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function changeMainImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+
+        function decreaseQty() {
+            var input = document.getElementById("quantity");
+            var value = parseInt(input.value);
+            if (value > 1) input.value = value - 1;
+        }
+
+        function increaseQty() {
+            var input = document.getElementById("quantity");
+            input.value = parseInt(input.value) + 1;
+        }
+    </script>
+}
+
+@section SachBanNhieu {
+    @Html.Action("SachBanNhieuPartial", "SachOnline")
+}

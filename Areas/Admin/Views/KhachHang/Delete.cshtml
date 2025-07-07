@@ -1,0 +1,29 @@
+﻿@model NguyenTanDanh.SachOnline.Models.KHACHHANG
+
+@{
+    ViewBag.Title = "Xoá khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Bạn có chắc chắn muốn xoá khách hàng này?</h2>
+<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>Họ tên</dt>
+        <dd>@Model.HoTen</dd>
+
+        <dt>Tài khoản</dt>
+        <dd>@Model.TaiKhoan</dd>
+
+        <dt>Email</dt>
+        <dd>@Model.Email</dd>
+    </dl>
+
+    @using (Html.BeginForm("Delete", "KhachHang", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.MaKH)
+        <button type="submit" class="btn btn-danger">Xoá</button>
+        @Html.ActionLink("Huỷ", "Index", null, new { @class = "btn btn-default" })
+    }
+</div>

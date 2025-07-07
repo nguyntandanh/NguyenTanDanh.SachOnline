@@ -1,0 +1,19 @@
+﻿@model NguyenTanDanh.SachOnline.Models.CHUDE
+@{
+    ViewBag.Title = "Xoá chủ đề";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Bạn có chắc muốn xoá chủ đề này?</h2>
+
+<div>
+    <strong>Mã CD:</strong> @Model.MaCD <br />
+    <strong>Tên chủ đề:</strong> @Model.TenChuDe
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Xoá</button>
+    @Html.ActionLink("Huỷ", "Index", null, new { @class = "btn btn-default" })
+}

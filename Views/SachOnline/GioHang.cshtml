@@ -1,0 +1,110 @@
+﻿@using System.Collections.Generic
+@using System
+@model List<NguyenTanDanh.SachOnline.Models.GioHang>
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 class="text-center">🛒 GIỎ HÀNG</h2>
+<hr />
+
+@if (!Model.Any())
+{
+    <p class="text-center text-danger">Giỏ hàng trống</p>
+}
+else
+{
+    <table class="table table-bordered text-center">
+        <thead class="active">
+            <tr>
+                <th>Ảnh bìa</th>
+                <th>Tên sách</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var giam = 0;
+                var sach = new NguyenTanDanh.SachOnline.Models.SachOnlineEntities()
+                                .SACHes.FirstOrDefault(s => s.MaSach == item.MaSach);
+                if (sach?.KHUYENMAI != null && sach.KHUYENMAI.TrangThai &&
+                    DateTime.Now >= sach.KHUYENMAI.NgayBatDau &&
+                    DateTime.Now <= sach.KHUYENMAI.NgayKetThuc)
+                {
+                    giam = sach.KHUYENMAI.GiaTriPhanTram ?? 0;
+                }
+
+                <tr class="@(giam > 0 ? "success" : "")">
+                    <td>
+                        <img src="~/Images/@(string.IsNullOrEmpty(item.AnhBia) ? "no-image.png" : item.AnhBia)"
+                             width="100" alt="Ảnh bìa" class="img-thumbnail" />
+                    </td>
+                    <td>
+                        <strong>@item.TenSach</strong>
+                        @if (giam > 0)
+                        {
+                            <span class="badge bg-danger ml-1">-@giam%</span>
+                        }
+                        <br />
+                        <a href="@Url.Action("ChiTietSach", "SachOnline", new { id = item.MaSach })"
+                           class="btn btn-link btn-xs">Chi tiết</a>
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("CapNhatGioHang", "SachOnline", FormMethod.Post))
+                        {
+                            <input type="hidden" name="MaSach" value="@item.MaSach" />
+                            <input type="number" name="SoLuong" value="@item.SoLuong" min="1"
+                                   class="form-control text-center" style="width: 70px; margin: auto;" />
+                            <br />
+                            <button type="submit" class="btn btn-default btn-sm">Cập nhật</button>
+                        }
+                    </td>
+                    <td>@String.Format("{0:N0} VNĐ", item.DonGia)</td>
+                    <td>@String.Format("{0:N0} VNĐ", item.ThanhTien)</td>
+                    <td>
+                        <a href="@Url.Action("XoaSanPham", "SachOnline", new { id = item.MaSach })"
+                           class="btn btn-link btn-xs text-danger"
+                           onclick="return confirm('Xóa sản phẩm này khỏi giỏ hàng?');">
+                            Xoá
+                        </a>
+                    </td>
+                </tr>
+            }
+
+            <tr class="info">
+                <td colspan="2"><strong>Tổng cộng:</strong></td>
+                <td><strong>@ViewBag.TongSoLuong</strong></td>
+                <td></td>
+                <td><strong>@String.Format("{0:N0} VNĐ", ViewBag.TongTien)</strong></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row" style="margin-top: 10px;">
+        <!-- XÓA GIỎ HÀNG -->
+        <div class="col-md-6 text-left">
+            <a href="@Url.Action("XoaGioHang", "SachOnline")"
+               class="btn btn-danger"
+               onclick="return confirm('Bạn có chắc chắn muốn xóa toàn bộ giỏ hàng?');">
+                <span class="fa fa-trash"></span> Xóa giỏ hàng
+            </a>
+        </div>
+
+        <!-- ĐẶT HÀNG / THANH TOÁN -->
+        <div class="col-md-6 text-right">
+            @using (Html.BeginForm("PaymentVnPay", "SachOnline", FormMethod.Post))
+            {
+                <input type="hidden" name="amount" value="@((int)ViewBag.TongTien)" />
+                <button type="submit" class="btn btn-success">
+                    <span class="fa fa-credit-card"></span> Thanh toán qua VNPay
+                </button>
+            }
+        </div>
+    </div>
+}

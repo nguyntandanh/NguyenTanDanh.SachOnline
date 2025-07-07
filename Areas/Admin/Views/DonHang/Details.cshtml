@@ -1,0 +1,31 @@
+﻿@model NguyenTanDanh.SachOnline.Models.DONDATHANG
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var chitiets = ViewBag.ChiTiet as List<NguyenTanDanh.SachOnline.Models.CTDATHANG>;
+}
+<h2 class="text-center">CHI TIẾT ĐƠN HÀNG #@Model.MaDonHang</h2>
+<p><strong>Khách hàng:</strong> @Model.KHACHHANG.HoTen</p>
+<p><strong>Ngày đặt:</strong> @Model.NgayDat</p>
+<p><strong>Ngày giao:</strong> @Model.NgayGiao</p>
+<p><strong>Đã giao:</strong> @(Model.TinhTrangGiaoHang.Value ? "✓" : "✗")</p>
+<p><strong>Thanh toán:</strong> @(Model.DaThanhToan.Value ? "✓" : "✗")</p>
+
+<h4>Danh sách sản phẩm:</h4>
+<table class="table table-bordered text-center">
+    <tr class="info">
+        <th>Tên sách</th>
+        <th>Số lượng</th>
+        <th>Đơn giá</th>
+        <th>Thành tiền</th>
+    </tr>
+    @foreach (var item in chitiets)
+    {
+        <tr>
+            <td>@item.SACH.TenSach</td>
+            <td>@item.SoLuong</td>
+            <td>@String.Format("{0:N0} VNĐ", item.DonGia)</td>
+            <td>@String.Format("{0:N0} VNĐ", item.SoLuong * item.DonGia)</td>
+        </tr>
+    }
+</table>

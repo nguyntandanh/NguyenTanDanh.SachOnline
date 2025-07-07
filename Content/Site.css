@@ -1,0 +1,256 @@
+﻿
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+#myCarousel {
+    margin-top: 0;
+    padding-top: 0;
+}
+.carousel-control {
+    width: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: auto;
+    background: none !important;
+    opacity: 1;
+    text-shadow: none;
+    font-size: 40px;
+    color: #fff;
+}
+
+    .carousel-control.left span,
+    .carousel-control.right span {
+        font-size: 40px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 8px 12px;
+        border-radius: 50%;
+    }
+
+    .carousel-control.left {
+        left: 10px;
+    }
+
+    .carousel-control.right {
+        right: 10px;
+    }
+
+    .carousel-control:hover span {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+.carousel-inner > .item > img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+.carousel-img {
+    height: 350px; 
+    object-fit: cover;
+    width: 100%;
+}
+
+.slider-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.book-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.thumbnail.book-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.book-img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.book-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #007bff;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 2.4em;
+    line-height: 1.2em;
+    margin-bottom: 10px;
+}
+
+.book-desc {
+    font-size: 13px;
+    color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; 
+    height: 2.4em; 
+    line-height: 1.2em;
+    margin-bottom: 15px;
+}
+
+
+.caption {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.mo-ta-ngan {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 3em;
+}
+
+/* Giá khuyến mãi (giá sau giảm) */
+.gia-khuyen-mai {
+    font-weight: bold;
+    color: red;
+    font-size: 16px;
+}
+
+/* Giá gốc bị gạch */
+.gia-goc {
+    text-decoration: line-through;
+    color: gray;
+    font-size: 14px;
+    margin-left: 6px;
+}
+
+/* Phần trăm giảm giá */
+.giam-phan-tram {
+    background-color: #d9534f; /* Bootstrap màu đỏ */
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 6px;
+    display: inline-block;
+}
+
+.imgsachbannhieu {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+/*ĐỊNH DẠNG CHI TIẾT SÁCH*/
+
+.zoom-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+}
+
+    .zoom-modal img {
+        display: block;
+        margin: auto;
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+.thumbnail-small {
+    cursor: pointer;
+    width: 70px;
+    height: 70px;
+    margin: 5px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+    .thumbnail-small:hover {
+        border-color: #337ab7;
+    }
+
+.small-img {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .small-img:hover {
+        border: 2px solid #007bff;
+    }
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-selector button {
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+
+.quantity-selector input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    margin: 0 5px;
+}
+
+.anh-nho.active {
+    border: 2px solid red;
+    opacity: 1;
+}
+.quantity-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

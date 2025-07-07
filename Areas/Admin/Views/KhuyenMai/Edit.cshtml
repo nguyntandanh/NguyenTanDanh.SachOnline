@@ -1,0 +1,39 @@
+﻿@model NguyenTanDanh.SachOnline.Models.KHUYENMAI
+@{
+    ViewBag.Title = "Chỉnh sửa khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.MaKM)
+    <div class="form-group">
+        @Html.LabelFor(m => m.TenKM)
+        @Html.TextBoxFor(m => m.TenKM, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MoTa)
+        @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.GiaTriPhanTram)
+        @Html.TextBoxFor(m => m.GiaTriPhanTram, new { @class = "form-control", type = "number", min = 0, max = 100 })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.NgayBatDau)
+        @Html.TextBoxFor(m => m.NgayBatDau, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.NgayKetThuc)
+        @Html.TextBoxFor(m => m.NgayKetThuc, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.TrangThai)
+        @Html.CheckBoxFor(m => m.TrangThai)
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    @Html.ActionLink("Huỷ", "Index", null, new { @class = "btn btn-default" })
+}

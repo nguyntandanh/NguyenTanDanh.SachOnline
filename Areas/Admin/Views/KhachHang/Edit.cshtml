@@ -1,0 +1,67 @@
+﻿@model NguyenTanDanh.SachOnline.Models.KHACHHANG
+
+@{
+    ViewBag.Title = "Sửa thông tin khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="text-center">SỬA THÔNG TIN KHÁCH HÀNG</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.MaKH)
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.HoTen)
+        @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DiaChi)
+        @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DiaChi, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DienThoai)
+        @Html.TextBoxFor(m => m.DienThoai, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DienThoai, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TaiKhoan)
+        @Html.TextBoxFor(m => m.TaiKhoan, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TaiKhoan, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MatKhau)
+        @Html.TextBoxFor(m => m.MatKhau, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.LoaiTaiKhoan)
+        @Html.DropDownListFor(m => m.LoaiTaiKhoan,
+            new SelectList(new[] {
+                new { Value = "user", Text = "Người dùng" },
+                new { Value = "admin", Text = "Quản trị viên" }
+            }, "Value", "Text", Model.LoaiTaiKhoan),
+            "Chọn loại tài khoản", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LoaiTaiKhoan, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+    @Html.ActionLink("Huỷ", "Index", null, new { @class = "btn btn-default" })
+}

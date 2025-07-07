@@ -1,0 +1,20 @@
+﻿@model NguyenTanDanh.SachOnline.Models.NHAXUATBAN
+@{
+    ViewBag.Title = "Xoá NXB";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Bạn có chắc muốn xoá nhà xuất bản này?</h2>
+
+<div>
+    <strong>Tên NXB:</strong> @Model.TenNXB <br />
+    <strong>Địa chỉ:</strong> @Model.DiaChi <br />
+    <strong>Điện thoại:</strong> @Model.DienThoai
+</div>
+
+@using (Html.BeginForm("DeleteConfirmed", "NhaXuatBan", new { id = Model.MaNXB }))
+{
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Xoá</button>
+    @Html.ActionLink("Huỷ", "Index", null, new { @class = "btn btn-default" })
+}

@@ -1,0 +1,58 @@
+﻿@using NguyenTanDanh.SachOnline.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản trị - @ViewBag.Title</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "Admin" })">Trang quản trị</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Sách", "Index", "Sach", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Chủ đề", "Index", "ChuDe", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Nhà xuất bản", "Index", "NhaXuatBan", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Khuyến mãi", "Index", "KhuyenMai", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Khách hàng", "Index", "KhachHang", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Đơn hàng", "Index", "DonHang", new { area = "Admin" }, null)</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["TaiKhoan"] != null)
+                    {
+                        var kh = (KHACHHANG)Session["TaiKhoan"];
+                        <li class="disabled">
+                            <a href="#">Xin chào, <strong>@kh.HoTen</strong></a>
+                        </li>
+                        <li>@Html.ActionLink("Đăng xuất", "DangXuat", "SachOnline", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Về trang người dùng", "Index", "SachOnline", new { area = "" }, null)</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content" style="margin-top:70px">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Trang quản trị Sách Online</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

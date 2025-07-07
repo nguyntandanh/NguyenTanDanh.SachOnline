@@ -1,0 +1,14 @@
+﻿@{
+    int soLuong = ViewBag.TongSoLuong ?? 0;
+    decimal tongTien = ViewBag.TongTien ?? 0;
+}
+
+<form class="navbar-form" action="@Url.Action("GioHang", "SachOnline")" method="get" style="margin:9px;">
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">
+            <span class="fa fa-shopping-cart"></span>
+            Giỏ hàng (@soLuong)
+        </button>
+    </div>
+</form>
+

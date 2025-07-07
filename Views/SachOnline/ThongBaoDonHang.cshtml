@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Đặt hàng thành công";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 class="text-center text-success">🎉 @TempData["ThongBaoDatHang"]</h2>
+<br />
+<div class="text-center">
+    <a href="@Url.Action("Index", "SachOnline")" class="btn btn-primary">Quay về trang chủ</a>
+</div>

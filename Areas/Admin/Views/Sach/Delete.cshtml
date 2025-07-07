@@ -1,0 +1,19 @@
+﻿@model NguyenTanDanh.SachOnline.Models.SACH
+@{
+    ViewBag.Title = "Xoá sách";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Bạn có chắc muốn xoá sách này?</h2>
+
+<div>
+    <strong>Tên sách:</strong> @Model.TenSach <br />
+    <strong>Ngày cập nhật:</strong> @Model.NgayCapNhat?.ToShortDateString()
+</div>
+
+@using (Html.BeginForm("DeleteConfirmed", "Sach", new { id = Model.MaSach }))
+{
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Xoá</button>
+    @Html.ActionLink("Huỷ", "Index", null, new { @class = "btn btn-default" })
+}

@@ -1,0 +1,16 @@
+﻿@model NguyenTanDanh.SachOnline.Models.DONDATHANG
+@{
+    ViewBag.Title = "Xoá đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2 class="text-danger text-center">XOÁ ĐƠN HÀNG</h2>
+<div class="alert alert-warning text-center">
+    Bạn có chắc chắn muốn xoá đơn hàng số <strong>@Model.MaDonHang</strong> của khách <strong>@Model.KHACHHANG.HoTen</strong>?
+</div>
+@using (Html.BeginForm())
+{
+    <div class="text-center">
+        <input type="submit" value="Xoá" class="btn btn-danger" /> |
+        @Html.ActionLink("Huỷ", "Index", null, new { @class = "btn btn-default" })
+    </div>
+}

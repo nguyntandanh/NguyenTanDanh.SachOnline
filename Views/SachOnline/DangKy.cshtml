@@ -1,0 +1,64 @@
+﻿@model NguyenTanDanh.SachOnline.Models.KHACHHANG
+
+@{
+    ViewBag.Title = "Đăng ký tài khoản";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<div class="dangky-form">
+    <h2 class="text-center">Đăng ký tài khoản</h2>
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+
+            @{
+                var fields = new Dictionary<string, string>
+                {
+                    { "HoTen", "Họ tên" },
+                    { "TaiKhoan", "Tài khoản" },
+                    { "MatKhau", "Mật khẩu" },
+                    { "Email", "Email" },
+                    { "DienThoai", "Điện thoại" },
+                    { "DiaChi", "Địa chỉ" }
+                };
+
+                foreach (var field in fields)
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-2">@field.Value</label>
+                        <div class="col-md-6">
+                            @if (field.Key == "MatKhau")
+                            {
+                                @Html.Password(field.Key, null, new { @class = "form-control" })
+                            }
+                            else if (field.Key == "Email")
+                            {
+                                @Html.TextBox(field.Key, null, new { @class = "form-control", type = "email" })
+                            }
+                            else
+                            {
+                                @Html.TextBox(field.Key, null, new { @class = "form-control" })
+                            }
+                        </div>
+                    </div>
+                }
+            }
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-6">
+                    <input type="submit" value="Đăng ký" class="btn btn-primary" />
+                </div>
+            </div>
+
+            @if (ViewBag.ThongBao != null)
+            {
+                <div class="alert alert-info col-md-offset-2 col-md-6">
+                    @ViewBag.ThongBao
+                </div>
+            }
+        </div>
+    }
+</div>

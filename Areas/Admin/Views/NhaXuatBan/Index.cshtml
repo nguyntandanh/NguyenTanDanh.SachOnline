@@ -1,0 +1,30 @@
+﻿@model IEnumerable<NguyenTanDanh.SachOnline.Models.NHAXUATBAN>
+@{
+    ViewBag.Title = "Danh sách NXB";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="text-center">DANH SÁCH NHÀ XUẤT BẢN</h2>
+<p class="text-right">
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-success" })
+</p>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>Tên NXB</th>
+        <th>Địa chỉ</th>
+        <th>Điện thoại</th>
+        <th>Thao tác</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.TenNXB</td>
+            <td>@item.DiaChi</td>
+            <td>@item.DienThoai</td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.MaNXB }, new { @class = "btn btn-warning btn-sm" }) 
+                @Html.ActionLink("Xóa", "Delete", new { id = item.MaNXB }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+</table>

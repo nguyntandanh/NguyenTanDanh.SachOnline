@@ -1,0 +1,30 @@
+﻿@model IEnumerable<NguyenTanDanh.SachOnline.Models.CHUDE>
+@{
+    ViewBag.Title = "Quản lý chủ đề";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="text-center">DANH SÁCH CHỦ ĐỀ</h2>
+
+<p class="text-right">
+    @Html.ActionLink("Thêm chủ đề", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Mã CD</th>
+        <th>Tên chủ đề</th>
+        <th>Thao tác</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.MaCD</td>
+            <td>@item.TenChuDe</td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.MaCD }, new { @class = "btn btn-warning btn-sm" }) 
+                @Html.ActionLink("Xoá", "Delete", new { id = item.MaCD }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+</table>

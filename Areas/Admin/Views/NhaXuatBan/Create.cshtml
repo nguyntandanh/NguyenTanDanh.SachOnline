@@ -1,0 +1,27 @@
+﻿@model NguyenTanDanh.SachOnline.Models.NHAXUATBAN
+@{
+    ViewBag.Title = "Thêm NXB";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thêm Nhà Xuất Bản</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(m => m.TenNXB)
+            @Html.TextBoxFor(m => m.TenNXB, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.DiaChi)
+            @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.DienThoai)
+            @Html.TextBoxFor(m => m.DienThoai, new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm</button>
+    </div>
+}

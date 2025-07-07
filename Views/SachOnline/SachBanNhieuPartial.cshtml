@@ -1,0 +1,29 @@
+﻿@model IEnumerable<NguyenTanDanh.SachOnline.Models.SACH>
+
+<h3 class="text-center">SÁCH BÁN NHIỀU</h3>
+<hr />
+<div class="row text-center">
+    @foreach (var sach in Model)
+    {
+        <div class="col-sm-6 col-md-3 col-lg-3 col-xs-6">
+            <div class="thumbnail">
+                <img src="~/Images/@sach.AnhBia"
+                     alt="@sach.TenSach"
+                     class="img-responsive img-rounded imgsachbannhieu" />
+                <div class="caption">
+                    <h5 style="height: 40px; overflow: hidden;">
+                        <a href="@Url.Action("ChiTietSach", "SachOnline", new { id = sach.MaSach })">
+                            @sach.TenSach
+                        </a>
+                    </h5>
+                    <p>
+                        <a href="@Url.Action("ThemGioHang", "SachOnline", new { id = sach.MaSach, returnUrl = Request.RawUrl })"
+                           class="btn btn-sm btn-primary">
+                            <span class="fa fa-shopping-cart"></span> Add to Cart
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

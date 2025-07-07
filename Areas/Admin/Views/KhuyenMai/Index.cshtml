@@ -1,0 +1,37 @@
+﻿@model IEnumerable<NguyenTanDanh.SachOnline.Models.KHUYENMAI>
+@{
+    ViewBag.Title = "Danh sách khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="text-center">DANH SÁCH KHUYẾN MÃI</h2>
+<p class="text-right">
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-bordered table-hover text-center">
+    <tr class="info">
+        <th>Tên KM</th>
+        <th>Mô tả</th>
+        <th>Giá trị (%)</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thúc</th>
+        <th>Trạng thái</th>
+        <th>Hành động</th>
+    </tr>
+    @foreach (var km in Model)
+    {
+        <tr>
+            <td>@km.TenKM</td>
+            <td>@km.MoTa</td>
+            <td>@km.GiaTriPhanTram%</td>
+            <td>@km.NgayBatDau.ToShortDateString()</td>
+            <td>@km.NgayKetThuc.ToShortDateString()</td>
+            <td>@(km.TrangThai ? "Đang áp dụng" : "Không áp dụng")</td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = km.MaKM }, new { @class = "btn btn-warning btn-sm" }) 
+                @Html.ActionLink("Xoá", "Delete", new { id = km.MaKM }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+</table>

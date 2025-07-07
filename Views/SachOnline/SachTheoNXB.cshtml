@@ -1,0 +1,39 @@
+﻿@model PagedList.IPagedList<NguyenTanDanh.SachOnline.Models.SACH>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Sách theo nhà xuất bản";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 class="text-center">NHÀ XUẤT BẢN: @ViewBag.TenNXB</h2>
+<hr />
+
+<div class="row text-center">
+    @foreach (var sach in Model)
+    {
+        <div class="col-sm-3 col-xs-6">
+            <div class="thumbnail book-card text-center">
+                <a href="@Url.Action("ChiTietSach", "SachOnline", new { id = sach.MaSach })">
+                    <img src="~/Images/@sach.AnhBia" class="book-img" alt="@sach.TenSach" />
+                </a>
+                <div class="caption">
+                    <h5 class="book-title">
+                        <a href="@Url.Action("ChiTietSach", "SachOnline", new { id = sach.MaSach })">@sach.TenSach</a>
+                    </h5>
+                    <p class="book-desc">@sach.MoTa</p>
+                    <div>
+                        <a href="@Url.Action("ThemGioHang", "SachOnline", new { id = sach.MaSach, returnUrl = Request.RawUrl })"
+                           class="btn btn-sm btn-primary">
+                            <span class="fa fa-shopping-cart"></span> Add to Cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("SachTheoNXB", new { id = Request["id"], page }))
+</div>
